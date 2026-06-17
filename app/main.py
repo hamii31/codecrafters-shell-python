@@ -36,7 +36,7 @@ def main():
             else:
                 executable, path = exists_and_executable(builtin[1])
                 if executable:
-                    print(f"{command} is {path}")
+                    print(f"{builtin[1]} is {path}")
                 if not executable:
                     print(f"{builtin[1]}: not found")
 
