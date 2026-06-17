@@ -40,6 +40,7 @@ def main():
                 builtin = command.split(" ")
                 if builtin[1] in valid_builitins:
                     print(f"{builtin[1]} is a shell builtin")
+                    continue
                 else:
                     executable, path = exists_and_executable(builtin[1])
                     if executable:
@@ -52,8 +53,10 @@ def main():
             # echo
             if command.startswith("echo "):
                 print(command[5:])
+                continue
             else:
                 print(f"{custom_args[0]}: command not found")
+                continue
 
         
         
