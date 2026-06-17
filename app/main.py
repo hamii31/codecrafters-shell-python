@@ -20,10 +20,11 @@ def main():
         # type
         valid_builitins = ["exit", "echo", "type"]
         if command.startswith("type "):
-            if command[4:] in valid_builitins:
-                print(f"{command} is a shell builtin")
+            builitin = command.split(" ")
+            if builitin in valid_builitins:
+                print(f"{builitin} is a shell builtin")
             else:
-                print(f"{command}: not found")
+                print(f"{builitin}: not found")
 
 
 if __name__ == "__main__":
