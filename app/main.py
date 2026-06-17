@@ -27,6 +27,14 @@ def main():
         if command == "exit":
             break
 
+        # custom command
+        custom_args = command.split(" ")
+        executable, path = exists_and_executable(custom_args[0])
+        if executable:
+            subprocess.run(custom_args)
+        else:
+            print(f"{custom_args[0]}: command not found")
+
         # type
         valid_builitins = ["exit", "echo", "type"]
         if command.startswith("type "):
@@ -43,15 +51,8 @@ def main():
         # echo
         if command.startswith("echo "):
             print(command[5:])
-        
-        # custom command
-        custom_args = command.split(" ")
-        executable, path = exists_and_executable(custom_args[0])
-        if executable:
-            subprocess.run(custom_args)
         else:
             print(f"{custom_args[0]}: command not found")
-            
         
     
 
