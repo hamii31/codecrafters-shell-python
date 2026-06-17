@@ -1,9 +1,16 @@
 import sys
+import subprocess
+
 import os
 PATH=os.environ.get("PATH")
 
+
+
+
 def exists_and_executable(command):
-    # Go through PATH
+    """
+    Iterates through the PATH and finds if a file exists and is executable
+    """
     path_dirs = PATH.split(":")
     for dir in path_dirs:
         path = f"{dir}/{command}"
@@ -40,6 +47,11 @@ def main():
         else:
             print(f"{command}: command not found")
         
+        
+        # custom command
+        custom_args = command.split(" ")
+        if exists_and_executable(custom_args[0]):
+            subprocess.run(custom_args)
 
 
 
