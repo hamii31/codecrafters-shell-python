@@ -33,7 +33,7 @@ def main():
                 break
             else:
                 if not exists_and_executable(builtin[1]):
-                    print(f"{builtin[1]}: command not found")
+                    print(f"{builtin[1]}: not found")
 
         # echo
         elif command.startswith("echo "):
