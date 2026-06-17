@@ -17,6 +17,14 @@ def main():
         else:
             print(f"{command}: command not found")
 
+        # type
+        valid_builitins = ["exit", "echo", "type"]
+        if command.startswith("type "):
+            if command[5:] in valid_builitins:
+                print(f"{command} is a shell builtin")
+            else:
+                print(f"{command}: not found")
+
 
 if __name__ == "__main__":
     main()
