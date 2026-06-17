@@ -27,6 +27,7 @@ def main():
                     path = f"{dir}/{builtin[1]}"
                     if os.path.exists(path) and os.access(path, os.X_OK):
                         print(f"{builtin[1]} is {dir}/{builtin[1]}")
+                        break
 
         # echo
         elif command.startswith("echo "):
