@@ -50,7 +50,7 @@ def main():
                     print(f"{builtin[1]}: not found")
 
         # echo
-        elif command.startswith("echo "):
+        if command.startswith("echo "):
             print(command[5:])
         else:
             print(f"{command}: command not found")
