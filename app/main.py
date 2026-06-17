@@ -47,6 +47,7 @@ def main():
                         continue
                     if not executable:
                         print(f"{builtin[1]}: not found")
+                        continue
 
             # echo
             if command.startswith("echo "):
