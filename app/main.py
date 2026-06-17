@@ -21,7 +21,7 @@ def main():
                 break
             else:
                 # Go through PATH
-                print(os.path.exists(builtin[1]))
+                print(os.path.exists(f"/usr/local/bin/{builtin[1]}"))
         # echo
         elif command.startswith("echo "):
             print(command[5:])
