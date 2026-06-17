@@ -1,4 +1,5 @@
 import sys
+import os
 
 
 def main():
@@ -14,11 +15,13 @@ def main():
         # type
         valid_builitins = ["exit", "echo", "type"]
         if command.startswith("type "):
-            builitin = command.split(" ")
-            if builitin[1] in valid_builitins:
-                print(f"{builitin[1]} is a shell builtin")
+            builtin = command.split(" ")
+            if builtin[1] in valid_builitins:
+                print(f"{builtin[1]} is a shell builtin")
+                break
             else:
-                print(f"{builitin[1]}: not found")
+                # Go through PATH
+                print(os.path.exists(builtin[1]))
         # echo
         elif command.startswith("echo "):
             print(command[5:])
