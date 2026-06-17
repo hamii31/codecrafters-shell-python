@@ -4,9 +4,6 @@ import subprocess
 import os
 PATH=os.environ.get("PATH")
 
-
-
-
 def exists_and_executable(command):
     """
     Iterates through the PATH and finds if a file exists and is executable
@@ -35,6 +32,7 @@ def main():
         executable, path = exists_and_executable(custom_args[0])
         if executable:
             subprocess.run(custom_args)
+            break
 
         # type
         valid_builitins = ["exit", "echo", "type"]
@@ -55,11 +53,7 @@ def main():
         else:
             print(f"{command}: command not found")
         
-        
-
-
-
-
+    
 
 if __name__ == "__main__":
     main()
