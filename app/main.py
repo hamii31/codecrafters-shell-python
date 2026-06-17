@@ -43,14 +43,15 @@ def main():
         # echo
         if command.startswith("echo "):
             print(command[5:])
+        
+        # custom command
+        custom_args = command.split(" ")
+        executable, path = exists_and_executable(custom_args[0])
+        if executable:
+            subprocess.run(custom_args)
         else:
-            # custom command
-            custom_args = command.split(" ")
-            executable, path = exists_and_executable(custom_args[0])
-            if executable:
-                subprocess.run(custom_args)
-            else:
-                print(f"{custom_args[0]}: command not found")
+            print(f"{custom_args[0]}: command not found")
+            
         
     
 
