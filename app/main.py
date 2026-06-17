@@ -1,10 +1,9 @@
 import sys
 import os
-
+PATH=os.environ.get("PATH")
 
 def main():
     while True:
-        PATH=os.environ.get("PATH")
 
         sys.stdout.write("$ ")
 
