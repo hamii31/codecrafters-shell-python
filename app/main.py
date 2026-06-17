@@ -44,6 +44,7 @@ def main():
                     executable, path = exists_and_executable(builtin[1])
                     if executable:
                         print(f"{builtin[1]} is {path}")
+                        continue
                     if not executable:
                         print(f"{builtin[1]}: not found")
 
