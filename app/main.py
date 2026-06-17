@@ -32,8 +32,10 @@ def main():
         executable, path = exists_and_executable(custom_args[0])
         if executable:
             subprocess.run(custom_args)
+            continue
         else:
             print(f"{custom_args[0]}: command not found")
+            
 
         # type
         valid_builitins = ["exit", "echo", "type"]
