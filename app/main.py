@@ -4,6 +4,8 @@ import os
 
 def main():
     while True:
+        PATH="/usr/bin:/usr/local/bin:$PATH"
+
         sys.stdout.write("$ ")
 
         command = input()
@@ -21,9 +23,11 @@ def main():
                 break
             else:
                 # Go through PATH
-                print(os.path.exists(f"/usr/{builtin[1]}"))
-                print(os.path.exists(f"/local/{builtin[1]}"))
-                print(os.path.exists(f"/bin/{builtin[1]}"))
+                path_dirs = PATH.split("/")
+                for dir in path_dirs:
+                    if os.path.exists(f"{dir}/{builtin[1]}"):
+                        print(f"{builtin[1]} is {dir}/{builtin[1]}")
+
         # echo
         elif command.startswith("echo "):
             print(command[5:])
