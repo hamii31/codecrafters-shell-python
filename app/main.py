@@ -34,27 +34,26 @@ def main():
             subprocess.run(custom_args)
             continue
         else:
-            print(f"{custom_args[0]}: command not found")
-            
+            # type
+            valid_builitins = ["exit", "echo", "type"]
+            if command.startswith("type "):
+                builtin = command.split(" ")
+                if builtin[1] in valid_builitins:
+                    print(f"{builtin[1]} is a shell builtin")
+                else:
+                    executable, path = exists_and_executable(builtin[1])
+                    if executable:
+                        print(f"{builtin[1]} is {path}")
+                    if not executable:
+                        print(f"{builtin[1]}: not found")
 
-        # type
-        valid_builitins = ["exit", "echo", "type"]
-        if command.startswith("type "):
-            builtin = command.split(" ")
-            if builtin[1] in valid_builitins:
-                print(f"{builtin[1]} is a shell builtin")
+            # echo
+            if command.startswith("echo "):
+                print(command[5:])
             else:
-                executable, path = exists_and_executable(builtin[1])
-                if executable:
-                    print(f"{builtin[1]} is {path}")
-                if not executable:
-                    print(f"{builtin[1]}: not found")
+                print(f"{custom_args[0]}: command not found")
 
-        # echo
-        if command.startswith("echo "):
-            print(command[5:])
-        else:
-            print(f"{custom_args[0]}: command not found")
+        
         
     
 
