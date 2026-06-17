@@ -4,7 +4,7 @@ import os
 
 def main():
     while True:
-        PATH="/usr/bin:/usr/local/bin:$PATH"
+        PATH=os.environ.get("PATH")
 
         sys.stdout.write("$ ")
 
@@ -23,7 +23,7 @@ def main():
                 break
             else:
                 # Go through PATH
-                path_dirs = PATH.split("/")
+                path_dirs = PATH.split(":")
                 for dir in path_dirs:
                     if os.path.exists(f"{dir}/{builtin[1]}"):
                         print(f"{builtin[1]} is {dir}/{builtin[1]}")
