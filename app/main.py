@@ -30,7 +30,6 @@ def main():
             builtin = command.split(" ")
             if builtin[1] in valid_builitins:
                 print(f"{builtin[1]} is a shell builtin")
-                break
             else:
                 if not exists_and_executable(builtin[1]):
                     print(f"{builtin[1]}: not found")
