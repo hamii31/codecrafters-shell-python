@@ -49,6 +49,8 @@ def main():
             executable, path = exists_and_executable(custom_args[0])
             if executable:
                 subprocess.run(custom_args)
+            else:
+                print(f"{custom_args[0]}: command not found")
         
     
 
