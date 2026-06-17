@@ -21,6 +21,7 @@ def main():
         valid_builitins = ["exit", "echo", "type"]
         if command.startswith("type "):
             builitin = command.split(" ")
+            print(builitin[1])
             if builitin[1] in valid_builitins:
                 print(f"{builitin[1]} is a shell builtin")
             else:
