@@ -15,17 +15,17 @@ def main():
                 print(f"{builitin[1]} is a shell builtin")
             else:
                 print(f"{builitin[1]}: not found")
-
+                # echo
+        elif command.startswith("echo "):
+            print(command[5:])
+        else:
+            print(f"{command}: command not found")
 
         # exit
         if command == "exit":
             break
         
-        # echo
-        if command.startswith("echo "):
-            print(command[5:])
-        else:
-            print(f"{command}: command not found")
+
 
 
 
