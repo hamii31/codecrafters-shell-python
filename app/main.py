@@ -7,6 +7,10 @@ def main():
 
         command = input()
 
+        # exit
+        if command == "exit":
+            break
+
         # type
         valid_builitins = ["exit", "echo", "type"]
         if command.startswith("type "):
@@ -15,15 +19,11 @@ def main():
                 print(f"{builitin[1]} is a shell builtin")
             else:
                 print(f"{builitin[1]}: not found")
-                # echo
+        # echo
         elif command.startswith("echo "):
             print(command[5:])
         else:
             print(f"{command}: command not found")
-
-        # exit
-        if command == "exit":
-            break
         
 
 
