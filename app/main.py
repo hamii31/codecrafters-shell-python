@@ -2,6 +2,17 @@ import sys
 import os
 PATH=os.environ.get("PATH")
 
+def exists_and_executable(command):
+    # Go through PATH
+    path_dirs = PATH.split(":")
+    for dir in path_dirs:
+        path = f"{dir}/{command}"
+        if os.path.exists(path) and os.access(path, os.X_OK):
+            print(f"{command} is {dir}/{command}")
+            return True
+        
+    return False
+
 def main():
     while True:
 
@@ -21,15 +32,8 @@ def main():
                 print(f"{builtin[1]} is a shell builtin")
                 break
             else:
-                # Go through PATH
-                path_dirs = PATH.split(":")
-                for dir in path_dirs:
-                    path = f"{dir}/{builtin[1]}"
-                    if os.path.exists(path) and os.access(path, os.X_OK):
-                        print(f"{builtin[1]} is {dir}/{builtin[1]}")
-                        break
-                    
-                print(f"{builtin[1]}: command not found")    
+                if not exists_and_executable(builtin[1]):
+                    print(f"{builtin[1]}: command not found")
 
         # echo
         elif command.startswith("echo "):
