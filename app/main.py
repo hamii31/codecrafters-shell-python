@@ -15,10 +15,9 @@ def exists_and_executable(command):
     for dir in path_dirs:
         path = f"{dir}/{command}"
         if os.path.exists(path) and os.access(path, os.X_OK):
-            print(f"{command} is {dir}/{command}")
-            return True
+            return True, f"{dir}/{command}"
         
-    return False
+    return False, None
 
 def main():
     while True:
@@ -31,6 +30,12 @@ def main():
         if command == "exit":
             break
 
+        # custom command
+        custom_args = command.split(" ")
+        executable, path = exists_and_executable(custom_args[0])
+        if executable:
+            subprocess.run(custom_args)
+
         # type
         valid_builitins = ["exit", "echo", "type"]
         if command.startswith("type "):
@@ -38,7 +43,10 @@ def main():
             if builtin[1] in valid_builitins:
                 print(f"{builtin[1]} is a shell builtin")
             else:
-                if not exists_and_executable(builtin[1]):
+                executable, path = exists_and_executable(builtin[1])
+                if executable:
+                    print(f"{command} is {path}")
+                if not executable:
                     print(f"{builtin[1]}: not found")
 
         # echo
@@ -48,10 +56,7 @@ def main():
             print(f"{command}: command not found")
         
         
-        # custom command
-        custom_args = command.split(" ")
-        if exists_and_executable(custom_args[0]):
-            subprocess.run(custom_args)
+
 
 
 
