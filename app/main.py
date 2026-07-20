@@ -1,5 +1,6 @@
 import sys
 import subprocess
+import shlex
 
 import os
 PATH=os.environ.get("PATH")
@@ -69,15 +70,8 @@ def main():
                 continue
             # echo
             if command.startswith("echo "):
-                output = command[5:]
-                if output.startswith("'") and output.endswith("'"):
-                    print(output[1:-1])
-                elif output.startswith("'") and output.endswith("'") and output.count("'") != 2:
-                    print(output.replace(" ", ""))
-                elif not output.startswith("'") and not output.startswith("'") and output.count("'") != 0:
-                    print(output.replace(" ", ""))
-                else:
-                    print(" ".join(output.split(" ")))
+                args = shlex.split(command)   # splits and handles quotes properly
+                print(" ".join(args[1:]))
                 continue
             else:
                 print(f"{custom_args[0]}: command not found")
