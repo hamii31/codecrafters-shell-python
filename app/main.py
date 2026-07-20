@@ -70,7 +70,7 @@ def main():
             # echo
             if command.startswith("echo "):
                 output = command[5:]
-                if output.startswith("'") and output.endswith("'") and output.count("'") == 2:
+                if output.startswith("'") and output.endswith("'"):
                     print(output[1:-1])
                 elif output.startswith("'") and output.endswith("'") and output.count("'") != 2:
                     print(output.replace(" ", ""))
