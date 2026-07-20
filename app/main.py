@@ -69,7 +69,15 @@ def main():
                 continue
             # echo
             if command.startswith("echo "):
-                print(command[5:])
+                output = command[5:]
+                if output.startswith("'") and output.endswith("'") and output.count("'") == 2:
+                    print(output)
+                elif output.startswith("'") and output.endswith("'") and output.count("'") != 2:
+                    print(output.replace(" ", ""))
+                elif not output.startswith("'") and not output.startswith("'") and output.count("'") != 0:
+                    print(output.replace(" ", ""))
+                else:
+                    print(" ".join(output.split(" ")))
                 continue
             else:
                 print(f"{custom_args[0]}: command not found")
