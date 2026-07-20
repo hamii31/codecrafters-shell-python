@@ -51,8 +51,7 @@ def main():
                         continue
             # cd
             if command.startswith("cd "):
-                path = command.split("/")
-                path = ''.join(path)
+                path = command[3:]
                 if os.path.exists(path):
                     os.chdir(path)
                     continue
