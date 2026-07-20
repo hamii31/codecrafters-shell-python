@@ -35,10 +35,10 @@ def main():
             continue
         else:
             # type
-            valid_builitins = ["exit", "echo", "type", "pwd"]
+            valid_builtins = ["exit", "echo", "type", "pwd", "cd"]
             if command.startswith("type "):
                 builtin = command.split(" ")
-                if builtin[1] in valid_builitins:
+                if builtin[1] in valid_builtins:
                     print(f"{builtin[1]} is a shell builtin")
                     continue
                 else:
@@ -49,6 +49,16 @@ def main():
                     if not executable:
                         print(f"{builtin[1]}: not found")
                         continue
+            # cd
+            if command.startswith("cd "):
+                path = command.split(" ")
+                if os.path.exists(path):
+                    os.chdir(path)
+                    continue
+                else:
+                    print(f"cd: {path}: No such file or directory")
+                    continue
+            
             # pwd
             if command.startswith("pwd"):
                 print(os.getcwd())
