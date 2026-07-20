@@ -35,7 +35,7 @@ def main():
             continue
         else:
             # type
-            valid_builitins = ["exit", "echo", "type"]
+            valid_builitins = ["exit", "echo", "type", "pwd"]
             if command.startswith("type "):
                 builtin = command.split(" ")
                 if builtin[1] in valid_builitins:
@@ -49,7 +49,9 @@ def main():
                     if not executable:
                         print(f"{builtin[1]}: not found")
                         continue
-
+            # pwd
+            if command.startswith("pwd"):
+                print(os.getcwd())
             # echo
             if command.startswith("echo "):
                 print(command[5:])
@@ -58,9 +60,7 @@ def main():
                 print(f"{custom_args[0]}: command not found")
                 continue
 
-        
-        
-    
-
 if __name__ == "__main__":
     main()
+
+# cd codecrafters-shell-python/app
