@@ -3,6 +3,7 @@ import subprocess
 
 import os
 PATH=os.environ.get("PATH")
+HOME=os.getenv("HOME")
 
 def exists_and_executable(command):
     """
@@ -54,6 +55,9 @@ def main():
                 path = command[3:]
                 if os.path.exists(path):
                     os.chdir(path)
+                    continue
+                elif path == "~":
+                    os.chdir(HOME)
                     continue
                 else:
                     print(f"cd: {path}: No such file or directory")
