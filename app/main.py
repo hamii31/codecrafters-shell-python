@@ -52,6 +52,7 @@ def main():
             # pwd
             if command.startswith("pwd"):
                 print(os.getcwd())
+                continue
             # echo
             if command.startswith("echo "):
                 print(command[5:])
