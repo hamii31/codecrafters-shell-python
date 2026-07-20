@@ -20,64 +20,57 @@ def exists_and_executable(command):
 
 def main():
     while True:
-
         sys.stdout.write("$ ")
 
         command = input()
 
-        # exit
-        if command == "exit":
+        args = shlex.split(command)
+        if not args:
+            continue
+
+        cmd = args[0]
+
+        # Execute builtins with priority
+        if cmd == "exit":
             break
 
-        # custom command
-        custom_args = command.split(" ")
-        executable, path = exists_and_executable(custom_args[0])
-        if executable:
-            subprocess.run(custom_args)
+        if cmd == "echo":
+            print(" ".join(args[1:]))
             continue
-        else:
-            # type
+
+        if cmd == "type":
             valid_builtins = ["exit", "echo", "type", "pwd", "cd"]
-            if command.startswith("type "):
-                builtin = command.split(" ")
-                if builtin[1] in valid_builtins:
-                    print(f"{builtin[1]} is a shell builtin")
-                    continue
-                else:
-                    executable, path = exists_and_executable(builtin[1])
-                    if executable:
-                        print(f"{builtin[1]} is {path}")
-                        continue
-                    if not executable:
-                        print(f"{builtin[1]}: not found")
-                        continue
-            # cd
-            if command.startswith("cd "):
-                path = command[3:]
-                if os.path.exists(path):
-                    os.chdir(path)
-                    continue
-                elif path == "~":
-                    os.chdir(HOME)
-                    continue
-                else:
-                    print(f"cd: {path}: No such file or directory")
-                    continue
-            
-            # pwd
-            if command.startswith("pwd"):
-                print(os.getcwd())
-                continue
-            # echo
-            if command.startswith("echo "):
-                args = shlex.split(command)   # splits and handles quotes properly
-                print(" ".join(args[1:]))
-                continue
+            target = args[1]
+            if target in valid_builtins:
+                print(f"{target} is a shell builtin")
             else:
-                print(f"{custom_args[0]}: command not found")
-                continue
+                executable, path = exists_and_executable(target)
+                if executable:
+                    print(f"{target} is {path}")
+                else:
+                    print(f"{target}: not found")
+            continue
+
+        if cmd == "pwd":
+            print(os.getcwd())
+            continue
+
+        if cmd == "cd":
+            path = args[1]
+            if path == "~":
+                os.chdir(HOME)
+            elif os.path.exists(path):
+                os.chdir(path)
+            else:
+                print(f"cd: {path}: No such file or directory")
+            continue
+
+        # then check for custom execs
+        executable, path = exists_and_executable(cmd)
+        if executable:
+            subprocess.run(args)
+        else:
+            print(f"{cmd}: command not found")
 
 if __name__ == "__main__":
     main()
-
-# cd codecrafters-shell-python/app
