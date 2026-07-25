@@ -2,9 +2,11 @@ import sys
 import subprocess
 import shlex
 import os
+import readline
 
 PATH=os.getenv("PATH")
 HOME=os.getenv("HOME")
+VALID_BUILTINS = ["exit", "echo", "type", "pwd", "cd"]
 
 def exists_and_executable(command):
     """
@@ -18,9 +20,20 @@ def exists_and_executable(command):
         
     return False, None
 
+def completer(text, state):
+    # text = the word being completed so far
+    matches = [b + " " for b in VALID_BUILTINS if b.startswith(text)]
+    if state < len(matches):
+        return matches[state]
+    return None
+
 def main():
+
     while True:
         sys.stdout.write("$ ")
+
+        readline.set_completer(completer)
+        readline.parse_and_bind("tab: complete")
 
         command = input()
 
@@ -90,9 +103,8 @@ def main():
             continue
 
         if cmd == "type":
-            valid_builtins = ["exit", "echo", "type", "pwd", "cd"]
             target = args[1]
-            if target in valid_builtins:
+            if target in VALID_BUILTINS:
                 print(f"{target} is a shell builtin")
             else:
                 executable, path = exists_and_executable(target)
