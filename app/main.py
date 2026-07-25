@@ -35,12 +35,15 @@ def main():
             break
 
         if ">" in args or "1>" in args:
-            file_path = args[-1];
+            file_path = args[-1]
 
             if not os.path.exists(file_path):
-                with open(file_path, 'w') as file:
-                    file.write(subprocess.run(args[1]))
-                    continue
+                try:
+                    with open(file_path, 'x') as file:
+                        file.write(subprocess.run(args[1]))
+                        continue
+                except:
+                    FileExistsError("File already exists")
             else:
                 with open(args[-1], 'w') as file:
                     file.write(subprocess.run(args[1]))
