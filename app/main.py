@@ -40,8 +40,11 @@ def main():
 
             exec_command = args[:redir_index]
             file_path = args[redir_index + 1]
-
-            result = subprocess.run(exec_command, capture_output=True, text=True)
+            try:
+                result = subprocess.run(exec_command, capture_output=True, text=True)
+            except (FileNotFoundError, subprocess.SubprocessError) as e:
+                print(e)
+                continue
 
             with open(file_path, "w") as file:
                 file.write(result.stdout)
