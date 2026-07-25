@@ -24,8 +24,17 @@ def completer(text, state):
     # builtins
     matches = [b + " " for b in VALID_BUILTINS if b.startswith(text)]
     # custom
-    if matches is None:
-        matches = [c + " " for c in PATH if c.startswith[text] and exists_and_executable(c)]
+    for directory in PATH.split(":"):
+        try:
+            entries = os.listdir(directory)
+        except (FileNotFoundError, NotADirectoryError, PermissionError):
+            continue  # skip dirs that don't exist or can't be read
+    
+        for name in entries:
+            if name.startswith(text) and name not in VALID_BUILTINS:
+                full_path = os.path.join(directory, name)
+                if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+                    matches.append(name + " ")
 
     if state < len(matches):
         return matches[state]
