@@ -69,6 +69,9 @@ def main():
             with open(file_path, "w") as file:
                 file.write(result.stderr)
 
+            if result.stdout:
+                print(result.stdout, end="")
+
             continue
 
 
