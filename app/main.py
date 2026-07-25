@@ -74,6 +74,27 @@ def main():
 
             continue
 
+        if ">>" in args or "1>>" in args:
+            redirect_token = ">>" if ">>" in args else "1>>"
+            redir_index = args.index(redirect_token)
+        
+            exec_command = args[:redir_index]
+            file_path = args[redir_index + 1]
+            try:
+                result = subprocess.run(exec_command, capture_output=True, text=True)
+            except (FileNotFoundError, subprocess.SubprocessError) as e:
+                print(e)
+                continue
+        
+            with open(file_path, "a") as file:
+                file.write(result.stdout)
+        
+            if result.stderr:
+                print(result.stderr, end="")
+        
+            continue
+
+
 
         if cmd == "echo":
             print(" ".join(args[1:]))
