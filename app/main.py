@@ -31,12 +31,20 @@ def main():
         cmd = args[0]
 
         # Execute builtins with priority
-        if ">" in args or "1>" in args:
-            subprocess.run(args)
-            continue
-
         if cmd == "exit":
             break
+
+        if ">" in args or "1>" in args:
+            file_path = args[-1];
+
+            if not os.path.exists(file_path):
+                with open(file_path, 'w') as file:
+                    subprocess.run(args)
+                    continue
+            else:
+                subprocess.run(args)
+                continue
+            
 
         if cmd == "echo":
             print(" ".join(args[1:]))
