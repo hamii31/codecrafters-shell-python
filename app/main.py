@@ -32,7 +32,7 @@ def main():
 
         # Execute builtins with priority
         if ">" in args or "1>" in args:
-            subprocess(args)
+            subprocess.run(args)
             continue
 
         if cmd == "exit":
