@@ -24,7 +24,7 @@ def completer(text, state):
     # builtins
     matches = [b + " " for b in VALID_BUILTINS if b.startswith(text)]
     # custom
-    if matches is []:
+    if matches is None:
         matches = [c + " " for c in PATH if c.startswith[text] and exists_and_executable(c)]
 
     if state < len(matches):
