@@ -21,8 +21,12 @@ def exists_and_executable(command):
     return False, None
 
 def completer(text, state):
-    # text = the word being completed so far
+    # builtins
     matches = [b + " " for b in VALID_BUILTINS if b.startswith(text)]
+    # custom
+    if matches is []:
+        matches = [c + " " for c in PATH if c.startswith[text]]
+        
     if state < len(matches):
         return matches[state]
     return None
