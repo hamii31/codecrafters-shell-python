@@ -1,9 +1,9 @@
 import sys
 import subprocess
 import shlex
-
 import os
-PATH=os.environ.get("PATH")
+
+PATH=os.getenv("PATH")
 HOME=os.getenv("HOME")
 
 def exists_and_executable(command):
@@ -31,6 +31,10 @@ def main():
         cmd = args[0]
 
         # Execute builtins with priority
+        if ">" in args or "1>" in args:
+            subprocess(args)
+            continue
+
         if cmd == "exit":
             break
 
