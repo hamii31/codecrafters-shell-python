@@ -34,8 +34,13 @@ def main():
         if cmd == "exit":
             break
 
-        if ">" in args or "1>" in args:
-            redirect_token = ">" if ">" in args else "1>"
+        if (">" in args or "1>" in args) or (">>" in args or "1>>" in args):
+            redirect_token = [i for i in args if i == ">" or i == "1>" or i == ">>" or i == "1>>" ]
+            
+            mode = "w"
+            if redirect_token == ">>" or redirect_token == "1>>":
+                mode = "a"
+
             redir_index = args.index(redirect_token)
 
             exec_command = args[:redir_index]
@@ -46,7 +51,7 @@ def main():
                 print(e)
                 continue
 
-            with open(file_path, "w") as file:
+            with open(file_path, mode) as file:
                 file.write(result.stdout)
 
             if result.stderr:
@@ -54,9 +59,15 @@ def main():
 
             continue
 
-        if "2>" in args:
-            redir_index = args.index("2>")
+        if "2>" in args or "2>>" in args:
+            redirect_token = "2>" if "2>" in args else "2>>"
+            mode = "w"
             
+            if redirect_token == "2>>":
+                mode = "a"
+
+            redir_index = args.index(redirect_token)
+
             exec_command = args[:redir_index]
             file_path = args[redir_index + 1]
 
@@ -66,35 +77,13 @@ def main():
                 print(e)
                 continue
 
-            with open(file_path, "w") as file:
+            with open(file_path, mode) as file:
                 file.write(result.stderr)
 
             if result.stdout:
                 print(result.stdout, end="")
 
             continue
-
-        if ">>" in args or "1>>" in args:
-            redirect_token = ">>" if ">>" in args else "1>>"
-            redir_index = args.index(redirect_token)
-        
-            exec_command = args[:redir_index]
-            file_path = args[redir_index + 1]
-            try:
-                result = subprocess.run(exec_command, capture_output=True, text=True)
-            except (FileNotFoundError, subprocess.SubprocessError) as e:
-                print(e)
-                continue
-        
-            with open(file_path, "a") as file:
-                file.write(result.stdout)
-        
-            if result.stderr:
-                print(result.stderr, end="")
-        
-            continue
-
-
 
         if cmd == "echo":
             print(" ".join(args[1:]))
