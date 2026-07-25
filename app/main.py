@@ -35,8 +35,7 @@ def main():
             break
 
         if (">" in args or "1>" in args) or (">>" in args or "1>>" in args):
-            redirect_token_list = [i for i in args if i in (">", "1>", ">>", "1>>")]
-            redirect_token = redirect_token_list[0]
+            redirect_token = next([i for i in args if i in (">", "1>", ">>", "1>>")], None)
             
             mode = "w"
             if redirect_token == ">>" or redirect_token == "1>>":
