@@ -39,10 +39,11 @@ def main():
 
             if not os.path.exists(file_path):
                 with open(file_path, 'w') as file:
-                    subprocess.run(args)
+                    file.write(subprocess.run(args[1]))
                     continue
             else:
-                subprocess.run(args)
+                with open(args[-1], 'w') as file:
+                    file.write(subprocess.run(args[1]))
                 continue
             
 
