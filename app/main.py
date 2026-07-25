@@ -39,7 +39,7 @@ def main():
             redir_index = args.index(redirect_token)
 
             exec_command = args[:redir_index]
-            file_path = args[redir_index:]
+            file_path = args[redir_index + 1]
 
             result = subprocess.run(exec_command, capture_output=True, text=True)
 
