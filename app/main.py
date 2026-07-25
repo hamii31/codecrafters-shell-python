@@ -41,7 +41,11 @@ def main():
             exec_command = args[:redir_index]
             file_path = args[redir_index + 1]
             try:
-                result = subprocess.run(exec_command, capture_output=True, text=True)
+                if exists_and_executable(exec_command):
+                    result = subprocess.run(exec_command, capture_output=True, text=True)
+                else:
+                    print(f"{exec_command}: No such fire or directory")
+                    continue
             except (FileNotFoundError, subprocess.SubprocessError) as e:
                 print(e)
                 continue
