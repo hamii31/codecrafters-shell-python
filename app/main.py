@@ -35,20 +35,18 @@ def main():
             break
 
         if ">" in args or "1>" in args:
-            file_path = args[-1]
+            redirect_token = ">" if ">" in args else "1>"
+            redir_index = args.index(redirect_token)
 
-            if not os.path.exists(file_path):
-                try:
-                    with open(file_path, 'x') as file:
-                        file.write(subprocess.run(args[1]))
-                        continue
-                except:
-                    FileExistsError("File already exists")
-            else:
-                with open(args[-1], 'w') as file:
-                    file.write(subprocess.run(args[1]))
-                continue
-            
+            exec_command = args[:redir_index]
+            file_path = args[redir_index:]
+
+            result = subprocess.run(exec_command, capture_output=True, text=True)
+
+            with open(file_path, "w") as file:
+                file.write(result.stdout)
+
+            continue
 
         if cmd == "echo":
             print(" ".join(args[1:]))
