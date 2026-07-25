@@ -20,21 +20,30 @@ def exists_and_executable(command):
         
     return False, None
 
+def display_matches(substitution, matches, longest_match_len):
+    print()
+    print("  ".join(sorted(matches)))
+
+    sys.stdout.write("$ " + readline.get_line_buffer())
+    sys.stdout.flush()
+
 def completer(text, state):
     # builtins
     matches = [b + " " for b in VALID_BUILTINS if b.startswith(text)]
+
     # custom
-    for directory in PATH.split(":"):
-        try:
-            entries = os.listdir(directory)
-        except (FileNotFoundError, NotADirectoryError, PermissionError):
-            continue  # skip dirs that don't exist or can't be read
-    
-        for name in entries:
-            if name.startswith(text) and name not in VALID_BUILTINS:
-                full_path = os.path.join(directory, name)
-                if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
-                    matches.append(name + " ")
+    if not matches:
+        for directory in PATH.split(":"):
+            try:
+                entries = os.listdir(directory)
+            except (FileNotFoundError, NotADirectoryError, PermissionError):
+                continue
+            
+            for name in entries:
+                if name.startswith(text) and name not in VALID_BUILTINS:
+                    full_path = os.path.join(directory, name)
+                    if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
+                        matches.append(name + " ")
 
     if state < len(matches):
         return matches[state]
@@ -47,6 +56,7 @@ def main():
 
         readline.set_completer(completer)
         readline.parse_and_bind("tab: complete")
+        readline.set_completion_display_matches_hook(display_matches)
 
         command = input()
 
