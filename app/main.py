@@ -44,7 +44,8 @@ def completer(text, state):
                     full_path = os.path.join(directory, name)
                     if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
                         matches.append(name + " ")
-    # files
+                        
+    # filenames in current dir or through given path
     if not matches:
         dir_prefix = os.path.dirname(text)
         listing_dir = dir_prefix or os.getcwd()
@@ -58,7 +59,7 @@ def completer(text, state):
             if name.startswith(os.path.basename(text)):
                 full_path = os.path.join(listing_dir, name)
                 if os.path.isfile(full_path):
-                    matches.append(matches.append(os.path.join(dir_prefix, name) + " "))
+                   matches.append(os.path.join(dir_prefix, name) + " ")
 
     if state < len(matches):
         return matches[state]
