@@ -44,7 +44,7 @@ def completer(text, state):
                     full_path = os.path.join(directory, name)
                     if os.path.isfile(full_path) and os.access(full_path, os.X_OK):
                         matches.append(name + " ")
-                        
+
     # filenames in current dir or through given path
     if not matches:
         dir_prefix = os.path.dirname(text)
@@ -72,6 +72,7 @@ def main():
 
         readline.set_completer(completer)
         readline.parse_and_bind("tab: complete")
+        readline.set_completer_delims(' \t\n')
         readline.set_completion_display_matches_hook(display_matches)
 
         command = input()
