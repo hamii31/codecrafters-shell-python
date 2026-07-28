@@ -28,10 +28,10 @@ def display_matches(substitution, matches, longest_match_len):
     sys.stdout.flush()
 
 def completer(text, state):
-    # builtins
+    # builtin execs
     matches = [b + " " for b in VALID_BUILTINS if b.startswith(text)]
 
-    # custom
+    # custom execs
     if not matches:
         for directory in PATH.split(":"):
             try:
