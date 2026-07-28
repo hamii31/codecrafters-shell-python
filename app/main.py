@@ -57,7 +57,10 @@ def completer(text, state):
             if name.startswith(filename):
                 full_path = os.path.join(current_directory, name)
                 if os.path.isfile(full_path):
-                    matches.append(name + " ")
+                    if current_directory == os.getcwd():
+                        matches.append(name + " ")
+                    else:
+                        matches.append(os.path.join(current_directory, name) + " ")
 
     if state < len(matches):
         return matches[state]
