@@ -46,14 +46,23 @@ def completer(text, state):
                         matches.append(name + " ")
     # files
     if not matches:
-        current_directory = os.getcwd()
-        try:
-            entries = os.listdir(current_directory)
-        except (FileNotFoundError, NotADirectoryError, PermissionError):
-            return
-                
+        if '/' in text:
+            current_directory = '/'.join(text.split('/')[:-1])
+            filename = text.split('/')[-1]
+            try:
+                entries = os.listdir(current_directory)
+            except (FileNotFoundError, NotADirectoryError, PermissionError):
+                return
+        else:
+            current_directory = os.getcwd()
+            filename = text
+            try:
+                entries = os.listdir(current_directory)
+            except (FileNotFoundError, NotADirectoryError, PermissionError):
+                return
+
         for name in entries:
-            if name.startswith(text):
+            if name.startswith(filename):
                 full_path = os.path.join(current_directory, name)
                 if os.path.isfile(full_path):
                     matches.append(name + " ")
