@@ -54,7 +54,7 @@ def completer(text, state):
                 
         for name in entries:
             if name.startswith(text):
-                full_path = os.path.join(directory, name)
+                full_path = os.path.join(current_directory, name)
                 if os.path.isfile(full_path):
                     matches.append(name + " ")
 
