@@ -46,7 +46,8 @@ def completer(text, state):
                         matches.append(name + " ")
     # files
     if not matches:
-        for directory in PATH.split(":"):
+        current_directory = os.getcwd()
+        for directory in current_directory:
             try:
                 entries = os.listdir(directory)
             except (FileNotFoundError, NotADirectoryError, PermissionError):
@@ -55,7 +56,7 @@ def completer(text, state):
             for name in entries:
                 if name.startswith(text):
                     full_path = os.path.join(directory, name)
-                    if os.path.isfile(full_path) and os.access(full_path, os.F_OK):
+                    if os.path.isfile(full_path):
                         matches.append(name + " ")
 
     if state < len(matches):
