@@ -74,7 +74,7 @@ def completer(text, state):
             if name.startswith(os.path.basename(text)):
                 full_path = os.path.join(listing_dir, name)
                 if os.path.isdir(full_path):
-                   matches.append(os.path.join(dir_prefix, name) + "/")
+                   matches.append(os.path.join(listing_dir, name) + "/")
 
     if state < len(matches):
         return matches[state]
