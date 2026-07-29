@@ -60,6 +60,21 @@ def completer(text, state):
                 full_path = os.path.join(listing_dir, name)
                 if os.path.isfile(full_path):
                    matches.append(os.path.join(dir_prefix, name) + " ")
+    # directories
+    if not matches:
+        dir_prefix = os.path.dirname(text)
+        listing_dir = dir_prefix or os.getcwd()
+        
+        try:
+            entries = os.listdir(listing_dir)
+        except (FileNotFoundError, NotADirectoryError, PermissionError):
+            return
+
+        for name in entries:
+            if name.startswith(os.path.basename(text)):
+                full_path = os.path.join(listing_dir, name)
+                if os.path.isfile(full_path):
+                   matches.append(os.path.join(dir_prefix, name) + "/")
 
     if state < len(matches):
         return matches[state]
@@ -70,6 +85,7 @@ def main():
     while True:
         sys.stdout.write("$ ")
 
+        # readline setup
         readline.set_completer(completer)
         readline.parse_and_bind("tab: complete")
         readline.set_completer_delims(' \t\n')
