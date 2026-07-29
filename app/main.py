@@ -62,19 +62,8 @@ def completer(text, state):
                    matches.append(os.path.join(dir_prefix, name) + " ")
     # directories
     if not matches:
-        dir_prefix = os.path.dirname(text)
-        listing_dir = dir_prefix or os.getcwd()
-        
-        try:
-            entries = os.listdir(listing_dir)
-        except (FileNotFoundError, NotADirectoryError, PermissionError):
-            return
-
-        for name in entries:
-            if name.startswith(os.path.basename(text)):
-                full_path = os.path.join(listing_dir, name)
-                if os.path.isdir(full_path):
-                   matches.append(os.path.join(listing_dir, name) + "/")
+        if os.path.isdir(text):
+            matches.append(text + os.sep)
 
     if state < len(matches):
         return matches[state]
